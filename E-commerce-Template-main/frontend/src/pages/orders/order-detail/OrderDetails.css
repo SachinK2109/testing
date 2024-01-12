@@ -1,0 +1,125 @@
+/* OrderDetails.css */
+.order-details-container {
+  padding: 20px;
+  background: #fff; /* Consider a background color to make it stand out */
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 24px;
+}
+
+.order-info-section {
+  margin-bottom: 20px;
+}
+
+.order-descriptions .ant-descriptions-item-label {
+  font-weight: bold;
+}
+
+.status-tag {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.products-divider {
+  margin-top: 30px;
+}
+
+.product-card {
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners for the cards */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  overflow: hidden; /* Ensures that the image does not bleed outside the border */
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.products-list .ant-list-item {
+  margin-top: 20px;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .ant-page-header,
+  .ant-page-header-heading-title,
+  .ant-page-header-heading-sub-title,
+  .ant-descriptions-item,
+  .ant-card,
+  .ant-card-cover,
+  .ant-tag,
+  .status-tag {
+    -webkit-print-color-adjust: exact; /* Chrome, Safari */
+    color-adjust: exact; /* Firefox */
+  }
+
+  .ant-page-header-heading-extra {
+    display: none; /* Hide non-printable elements */
+  }
+
+  .ant-card {
+    box-shadow: none; /* Remove shadows for print */
+    margin-bottom: 20px; /* Add margin to separate cards if there are multiple */
+  }
+
+  /* Ensure images are sized correctly */
+  .ant-card-cover img {
+    max-width: 100px; /* Set a max width for images */
+    max-height: 100px; /* Set a max height for images */
+    object-fit: cover; /* Ensure the aspect ratio is maintained */
+  }
+
+  .product-card {
+    border: 1px solid #ddd; /* Add a light border for definition */
+    page-break-inside: avoid; /* Avoid breaking the card across pages */
+    box-shadow: none; /* Remove box shadows */
+    padding: 10px; /* Add some padding around the content */
+    margin-bottom: 10px; /* Add margin to the bottom for spacing between cards */
+  }
+
+  /* Ensure images in the product card are visible and sized appropriately */
+  .ant-card-cover img {
+    display: block;
+    max-width: 100%; /* Limit image size to the width of the card */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px; /* Add space between the image and the text */
+  }
+
+  /* Style the descriptions in the product card */
+  .ant-descriptions-item {
+    font-size: 12px; /* Adjust font size for better readability */
+  }
+
+  /* Adjust the size and padding of the Descriptions component */
+  .ant-descriptions {
+    padding: 0;
+  }
+
+  /* Hide any other elements that you don't want to print */
+  .ant-layout-header,
+  .ant-layout-footer,
+  .ant-layout-sider,
+  .ant-breadcrumb,
+  .ant-btn {
+    display: none;
+  }
+
+  /* Adjust the layout for printing */
+  .order-details-container {
+    padding: 0;
+  }
+
+  .order-info-section,
+  .products-list {
+    width: 100%; /* Full width for print */
+  }
+
+  /* More styles can be added as needed to improve the print layout */
+}

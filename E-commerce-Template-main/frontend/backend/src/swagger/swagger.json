@@ -1,0 +1,1240 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "V1",
+    "title": "E-Commerce",
+    "description": "CLI App API for E-Commerce"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "API's",
+      "description": "API Document of E-Commerce"
+    }
+  ],
+  "paths": {
+    "/users/get": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Get All Users",
+        "responses": {
+          "200": {
+            "description": "All users fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Get User Profile.",
+        "responses": {
+          "200": {
+            "description": "User fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/users/add": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Creates a new user.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "description": "login a User",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "signed In successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/forgot": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Forgot User Password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Forgot"
+              }
+            }
+          }
+        },
+        "produces": ["application/token"],
+        "responses": {
+          "200": {
+            "description": "Token generated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/reset/{token}": {
+      "put": {
+        "tags": ["Users"],
+        "description": "Reset User's Password",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Reset Password",
+            "in": "body",
+            "description": "Reset",
+            "schema": {
+              "$ref": "#/components/schemas/Reset"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Password Changed successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/users/profile/edit": {
+      "put": {
+        "tags": ["Users"],
+        "description": "Edit User Details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Profile"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Password Changed successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/users/delete/{id}": {
+      "delete": {
+        "tags": ["Users"],
+        "description": "Delete user By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/admins/get": {
+      "get": {
+        "tags": ["Admin"],
+        "description": "Get all Admin",
+        "responses": {
+          "200": {
+            "description": "All admins fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/admins/add": {
+      "post": {
+        "tags": ["Admin"],
+        "description": "Create a new Admin.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Admin created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/admins/login": {
+      "post": {
+        "tags": ["Admin"],
+        "description": "login as Admin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Admin signed In successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/admins/delete/{id}": {
+      "delete": {
+        "tags": ["Admin"],
+        "description": "Delete Admin By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Admin ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Admin deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/products/get": {
+      "get": {
+        "tags": ["Products"],
+        "description": "Get all Products",
+        "responses": {
+          "200": {
+            "description": "All products fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/products/get/{id}": {
+      "get": {
+        "tags": ["Products"],
+        "description": "Get Product By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User signed in successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/products/add": {
+      "post": {
+        "tags": ["Products"],
+        "description": "Create a new Product",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/products/edit/{id}": {
+      "put": {
+        "tags": ["Products"],
+        "description": "Update Product By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Product updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/products/delete/{id}": {
+      "delete": {
+        "tags": ["Products"],
+        "description": "Deletes Product By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Product deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/cart/get": {
+      "get": {
+        "tags": ["Cart"],
+        "responses": {
+          "200": {
+            "description": "User details retrieved successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/cart/add/{id}": {
+      "post": {
+        "tags": ["Cart"],
+        "description": "Create a new user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quantity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cart Items fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/cart/edit/{id}": {
+      "put": {
+        "tags": ["Cart"],
+        "description": "Update Quantity of Cart Item By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quantity"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Cart updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/cart/delete/{id}": {
+      "delete": {
+        "tags": ["Cart"],
+        "description": "Delete Product By id from cart",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Product removed from cart successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/get": {
+      "get": {
+        "tags": ["Orders"],
+        "responses": {
+          "200": {
+            "description": "Orders fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/get/{id}": {
+      "get": {
+        "tags": ["Orders"],
+        "description": "Get Order By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Orders fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": [],
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/add": {
+      "post": {
+        "tags": ["Orders"],
+        "description": "Create a new user.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": [],
+            "admin_api_key": []
+          }
+        ]
+      }
+    },
+    "/review/get/{prodId}": {
+      "get": {
+        "tags": ["Reviews"],
+        "parameters": [
+          {
+            "name": "product id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviews fetched successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/review/add": {
+      "post": {
+        "tags": ["Reviews"],
+        "description": "Create a new Review.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/review/edit/{id}": {
+      "put": {
+        "tags": ["Reviews"],
+        "description": "Update Review By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Review ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateReview"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Order Updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": []
+          }
+        ]
+      }
+    },
+    "/review/delete/{id}": {
+      "delete": {
+        "tags": ["Reviews"],
+        "description": "Delete Review By id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Review ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User signed in successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "user_api_key": [],
+            "admin_api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Id": {
+        "type": "string"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["firstName", "lastName", "email"],
+        "example": {
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "johndoe@example.com",
+          "password": "Password@123"
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "brand",
+          "imageUrl",
+          "description",
+          "owner",
+          "price",
+          "discount",
+          "category",
+          "quantity"
+        ],
+        "example": {
+          "title": "Cheetos flamin hot",
+          "brand": "Cheetos",
+          "imageUrl": "https://m.media-amazon.com/images/I/41AsllSnTCL._SX300_SY300_QL70_FMwebp_.jpg",
+          "description": "Cheetos with Flamin hot flavor",
+          "owner": "65718a686d1e3f35bcc778f3",
+          "price": 269,
+          "discount": 150,
+          "category": "Chips & Snacks",
+          "quantity": 1
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "example": {
+          "email": "johndoe@example.com",
+          "password": "Password@123"
+        }
+      },
+      "Reset": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["password"]
+      },
+      "Forgot": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": ["email"]
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "example": {
+          "firstName": "John",
+          "lastName": "Doe",
+          "phone": 555555555,
+          "picture": "https://gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s200&d=retro",
+          "email": "johndoe@example.com"
+        }
+      },
+      "Admin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "example": {
+          "email": "johndoe@example.com",
+          "password": "Password@123"
+        }
+      },
+      "Quantity": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": ["quantity"],
+        "example": {
+          "quantity": 1
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "reviews": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "_id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "brand": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "owner": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "__v": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "quantity": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "userId": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": ["products", "user"],
+        "example": {
+          "products": [
+            {
+              "product": {
+                "reviews": [],
+                "discount": 99,
+                "_id": "6572b7c2458cfc3b2cd577c0",
+                "title": "Cheetos Flammin Hot",
+                "brand": "Cheetos",
+                "imageUrl": "https://m.media-amazon.com/images/I/41AsllSnTCL._SX300_SY300_QL70_FMwebp_.jpg",
+                "description": "Description Changed",
+                "owner": "65718a686d1e3f35bcc778f3",
+                "price": 115,
+                "category": "Chips & Snacks",
+                "quantity": 1,
+                "createdAt": "2023-12-08T06:29:22.192Z",
+                "updatedAt": "2023-12-08T06:46:33.373Z",
+                "__v": 0
+              },
+              "quantity": 3
+            }
+          ],
+          "user": {
+            "email": "sachinkaythamwar@gmail.com",
+            "userId": "65718a686d1e3f35bcc778f3"
+          }
+        }
+      },
+      "addReview": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "example": {
+          "owner": "658eba2f9e80c163b4d994ce",
+          "productId": "6572b7c2458cfc3b2cd577c0",
+          "rating": 5,
+          "title": "Good",
+          "description": "this is good product"
+        }
+      },
+      "updateReview": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "example": {
+          "rating": 5,
+          "title": "Good",
+          "description": "this is good product"
+        }
+      }
+    },
+
+    "securitySchemes": {
+      "user_api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "admin_api_key": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "security": [
+      {
+        "user_api_key": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+#side-nav-container {
+  li {
+    height: max-content;
+  }
+}
